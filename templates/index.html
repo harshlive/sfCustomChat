@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Live Chat</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+            integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
+            crossorigin="anonymous"
+        />
+        <link rel="stylesheet" href="/static/css/style.css" />
+    </head>
+    <body>
+        <div id="chat-container" class="container clearfix chat-container">
+            <div class="chat">
+                <div class="chat-header clearfix">
+                    <img
+                        src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01_green.jpg"
+                        alt="avatar"
+                    />
+
+                    <div class="chat-about">
+                        <div class="chat-with">Chat with John Doe</div>
+                    </div>
+                </div>
+                <!-- end chat-header -->
+
+                <div id="chat-hist-container" class="chat-history">
+                    <ul></ul>
+                </div>
+                <!-- end chat-history -->
+
+                <div class="chat-message clearfix">
+                    <input
+                        type="text"
+                        name="message-to-send"
+                        id="message-to-send"
+                        placeholder="Type your message"
+                        rows="3"
+                        onkeydown="sendMessageOnEnter(event)"
+                    />
+                    <button onclick="sendMessage()">
+                        <i class="fa fa-paper-plane"></i> Send
+                    </button>
+                </div>
+                <!-- end chat-message -->
+            </div>
+            <!-- end chat -->
+        </div>
+        <button onclick="toggleChat()" class="init-chat">
+            <i class="fa fa-user"></i> Chat with our agent
+        </button>
+        <!-- end container -->
+        <script src="/static/js/jquery.min.js"></script>
+        <script src="/static/js/index.js"></script>
+    </body>
+</html>
