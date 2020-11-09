@@ -7,7 +7,7 @@
 }
 
 body {
-  background-image: url("/static/img/whj.png");
+  background-image: url("/static/img/WHJChat.png");
   background-size: cover;
   font: 14px/20px "Lato", Arial, sans-serif;
   padding: 40px 0;
@@ -111,11 +111,6 @@ ul {
 .chat .chat-history .my-message {
   background: rgba(255, 236, 217, 0.5);
   color: #707070;
-}
-.chat .chat-history .my-message:after {
-  border-bottom-color: rgba(255, 236, 217, 0.5);
-  color: #707070;
-  left: 93%;
 }
 
 .chat .chat-history .other-message {
