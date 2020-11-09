@@ -4,10 +4,8 @@ from flask import Flask, request, render_template, Response
 import time
 import json
 from uuid import uuid4
-
+import redis
 app = Flask(__name__)
-
-global keyMap
 
 
 @app.route("/")
@@ -18,20 +16,20 @@ def home():
 @app.route('/initchat')
 def initchat():
     sessMapper = str(uuid4())
-    global keyMap
     session_id, affinity_token, key = getSessionId()
     getChasitorInit(session_id, affinity_token, key)
-    keyMap[sessMapper] = key
-    print(keyMap)
-    return json.dumps({'sessKey': sessMapper, 'affinityToken': affinity_token, 'keyMap': keyMap}), 200, {'ContentType': 'application/json'}
+    r = redis.Redis('localhost')
+    r.hmset(sessMapper, key)
+    r.expire(sessMapper, 3800)
+    return json.dumps({'sessKey': sessMapper, 'affinityToken': affinity_token}), 200, {'ContentType': 'application/json'}
 
 
 @app.route('/stream')
 def stream():
-    global keyMap
-    print(keyMap)
+
     key = request.args['sessKey']
-    sessKey = keyMap[key]
+    r = redis.Redis('localhost')
+    sessKey = r.hgetall(key)
     affToken = request.args['affinityToken']
     # id: <any_id>\nevent: <any_message>\ndata: <any_data>\n\n
 
@@ -44,9 +42,10 @@ def stream():
 
 @app.route("/sendmessage", methods=['POST'])
 def sendMessage():
-    global keyMap
+
     key = request.args['sessKey']
-    sessKey = keyMap[key]
+    r = redis.Redis('localhost')
+    sessKey = r.hgetall(key)
     affToken = request.args['affinityToken']
     msg = request.form['message']
     sendChatMessage(1, affToken, sessKey, msg)

@@ -109,23 +109,23 @@ ul {
 }
 
 .chat .chat-history .my-message {
-  background: #ffece6;
-  color: #fa5f1c;
+  background: rgba(255, 236, 217, 0.5);
+  color: #707070;
 }
 .chat .chat-history .my-message:after {
-  border-bottom-color: #ffece6;
-  color: #5843be;
+  border-bottom-color: rgba(255, 236, 217, 0.5);
+  color: #707070;
   left: 93%;
 }
 
 .chat .chat-history .other-message {
-  background: #c6ddf1;
-  color: #5843be;
+  background: rgb(216, 239, 245);
+  color: rgb(1, 136, 172);
 }
 
 .chat .chat-history .other-message:after {
-  border-bottom-color: #c6ddf1;
-  color: #5843be;
+  border-bottom-color: rgb(216, 239, 245);
+  color: rgb(1, 136, 172);
   left: 93%;
 }
 
@@ -153,7 +153,7 @@ ul {
   border-radius: 10px;
   cursor: pointer;
   font-weight: bold;
-  background: #ff6400;
+  background: rgb(1, 136, 172);
 }
 
 .init-chat {
@@ -168,14 +168,14 @@ ul {
   border-radius: 10px;
   cursor: pointer;
   font-weight: bold;
-  background: #ff6400;
+  background: rgb(1, 136, 172);
 }
 
 .init-chat:hover {
-  background: #ce5504;
+  background: rgb(1, 136, 172);
 }
 .chat .chat-message button:hover {
-  background: #ce5504;
+  background: rgb(1, 136, 172);
 }
 
 .online,
