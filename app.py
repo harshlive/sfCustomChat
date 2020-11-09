@@ -23,7 +23,7 @@ def initchat():
     getChasitorInit(session_id, affinity_token, key)
     keyMap[sessMapper] = key
     print(keyMap)
-    return json.dumps({'sessKey': sessMapper, 'affinityToken': affinity_token}), 200, {'ContentType': 'application/json'}
+    return json.dumps({'sessKey': sessMapper, 'affinityToken': affinity_token, 'keyMap': keyMap}), 200, {'ContentType': 'application/json'}
 
 
 @app.route('/stream')
