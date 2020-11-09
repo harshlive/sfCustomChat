@@ -7,7 +7,8 @@
 }
 
 body {
-  background-image: url("/static/img/whj.png");
+  background-image: url("/static/img/homehero.png");
+  background-repeat: no-repeat;
   background-size: cover;
   font: 14px/20px "Lato", Arial, sans-serif;
   padding: 40px 0;
@@ -37,6 +38,9 @@ ul {
 }
 
 .chat .chat-header {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  background-color: rgb(1, 136, 172);
   padding: 10px;
   border-bottom: 2px solid white;
 }
@@ -53,7 +57,7 @@ ul {
 
 .chat .chat-header .chat-with {
   font-weight: bold;
-  font-size: 16px;
+  font-size: 18px;
 }
 
 .chat .chat-header .chat-num-messages {
@@ -68,10 +72,11 @@ ul {
 }
 
 .chat .chat-history {
+  background: white;
   padding: 30px 30px 20px;
   border-bottom: 2px solid white;
   overflow-y: scroll;
-  height: 450px;
+  height: 500px;
 }
 
 .chat .chat-history .message-data {
@@ -85,7 +90,7 @@ ul {
 
 .chat .chat-history .message {
   color: white;
-  padding: 18px 20px;
+  padding: 5px 15px;
   line-height: 26px;
   font-size: 16px;
   border-radius: 7px;
@@ -144,11 +149,11 @@ ul {
 }
 
 .chat .chat-message button {
-  padding: 5px 10px;
+  padding: 10px 20px;
   float: right;
   color: #ffffff;
-  font-size: 16px;
-  text-transform: uppercase;
+  font-size: 14px;
+  /* text-transform: uppercase; */
   border: none;
   border-radius: 10px;
   cursor: pointer;
@@ -158,16 +163,17 @@ ul {
 
 .init-chat {
   position: fixed;
-  right: 5px;
-  bottom: 5px;
-  padding: 5px 10px;
+  right: 20px;
+  bottom: 20px;
+  padding: 10px 20px;
   color: #ffffff;
-  font-size: 16px;
-  text-transform: uppercase;
+  font-size: 20px;
+  /* text-transform: uppercase; */
   border: none;
   border-radius: 10px;
   cursor: pointer;
   font-weight: bold;
+  box-shadow: 0 10px 50px 0 rgba(0, 0, 0, 0.63);
   background: rgb(1, 136, 172);
 }
 

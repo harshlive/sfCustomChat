@@ -37,6 +37,7 @@ function sendMessageOnEnter(e) {
 
 function toggleChat() {
   document.getElementById("chat-container").classList.toggle("chat-container");
+  document.getElementById("initchatbtn").classList.toggle("chat-container");
   initchat();
 }
 
