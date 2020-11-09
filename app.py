@@ -28,6 +28,7 @@ def initchat():
 @app.route('/stream')
 def stream():
     global keyMap
+    print(keyMap)
     key = request.args['sessKey']
     sessKey = keyMap[key]
     affToken = request.args['affinityToken']
