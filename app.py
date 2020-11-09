@@ -103,7 +103,7 @@ def getMessages(session_id, affinity_token, key):
                 if 'text' in json_resp['messages'][i]['message'].keys():
                     message += json_resp['messages'][i]['message']['text']
         elif json_resp['messages'][0]['type'] == "ChatRequestSuccess":
-            message = "Connected to our agent"
+            message = "Connected to Harsh Ranjan"
         else:
             message = "Typing"
     else:
