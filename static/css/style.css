@@ -112,6 +112,11 @@ ul {
   background: rgba(255, 236, 217, 0.5);
   color: #707070;
 }
+.chat .chat-history .my-message:after {
+  border-bottom-color: rgba(255, 236, 217, 0.5);
+  color: #707070;
+  left: 93%;
+}
 
 .chat .chat-history .other-message {
   background: rgb(216, 239, 245);
