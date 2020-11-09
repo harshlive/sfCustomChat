@@ -19,7 +19,7 @@ def initchat():
     session_id, affinity_token, key = getSessionId()
     getChasitorInit(session_id, affinity_token, key)
     r = redis.Redis('localhost')
-    r.hmset(sessMapper, key)
+    r.set(sessMapper, key)
     r.expire(sessMapper, 3800)
     return json.dumps({'sessKey': sessMapper, 'affinityToken': affinity_token}), 200, {'ContentType': 'application/json'}
 
@@ -29,7 +29,7 @@ def stream():
 
     key = request.args['sessKey']
     r = redis.Redis('localhost')
-    sessKey = r.hgetall(key)
+    sessKey = r.get(key)
     affToken = request.args['affinityToken']
     # id: <any_id>\nevent: <any_message>\ndata: <any_data>\n\n
 
@@ -45,7 +45,7 @@ def sendMessage():
 
     key = request.args['sessKey']
     r = redis.Redis('localhost')
-    sessKey = r.hgetall(key)
+    sessKey = r.get(key)
     affToken = request.args['affinityToken']
     msg = request.form['message']
     sendChatMessage(1, affToken, sessKey, msg)
