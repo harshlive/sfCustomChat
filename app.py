@@ -7,7 +7,7 @@ from uuid import uuid4
 
 app = Flask(__name__)
 
-keyMap = {}
+global keyMap
 
 
 @app.route("/")
