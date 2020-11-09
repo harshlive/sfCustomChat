@@ -22,6 +22,7 @@ def initchat():
     session_id, affinity_token, key = getSessionId()
     getChasitorInit(session_id, affinity_token, key)
     keyMap[sessMapper] = key
+    print(keyMap)
     return json.dumps({'sessKey': sessMapper, 'affinityToken': affinity_token}), 200, {'ContentType': 'application/json'}
 
 
