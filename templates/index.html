@@ -1,60 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Live Chat</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
-      integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="/static/css/style.css" />
-  </head>
-  <body>
-    <div id="chat-container" class="container clearfix chat-container">
-      <div class="chat">
-        <div class="chat-header clearfix">
-          <img
-            src="/static/img/avatar.png"
-            alt="avatar"
-            style="border-radius: 30px; height: 45px"
-          />
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Live Chat</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+            integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
+            crossorigin="anonymous"
+        />
+        <link rel="stylesheet" href="/static/css/style.css" />
+        <link
+            rel="shortcut icon"
+            href="/static/img/favicon.ico"
+            type="image/x-icon"
+        />
+    </head>
+    <body>
+        <div id="chat-container" class="container clearfix chat-container">
+            <div class="chat">
+                <div class="chat-header clearfix">
+                    <img
+                        src="/static/img/avatar.png"
+                        alt="avatar"
+                        style="border-radius: 30px; height: 45px"
+                    />
 
-          <div class="chat-about" style="padding-top: 5px; color: white">
-            <div class="chat-with">Chat with Harsh</div>
-          </div>
-        </div>
-        <!-- end chat-header -->
+                    <div
+                        class="chat-about"
+                        style="padding-top: 5px; color: white"
+                    >
+                        <div class="chat-with">Chat with Harsh</div>
+                    </div>
+                    <div class="chat-close" onclick="toggleChat()">
+                        <i class="fas fa-lg fa-times"></i>
+                    </div>
+                </div>
+                <!-- end chat-header -->
 
-        <div id="chat-hist-container" class="chat-history">
-          <ul></ul>
-        </div>
-        <!-- end chat-history -->
+                <div id="chat-hist-container" class="chat-history">
+                    <ul></ul>
+                </div>
+                <!-- end chat-history -->
 
-        <div class="chat-message clearfix">
-          <input
-            type="text"
-            name="message-to-send"
-            id="message-to-send"
-            placeholder="Type your message"
-            rows="3"
-            onkeydown="sendMessageOnEnter(event)"
-          />
-          <button onclick="sendMessage()">
-            <i class="fa fa-paper-plane"></i> Send
-          </button>
+                <div class="chat-message clearfix">
+                    <input
+                        type="text"
+                        name="message-to-send"
+                        id="message-to-send"
+                        placeholder="Type your message"
+                        rows="3"
+                        onkeydown="sendMessageOnEnter(event)"
+                    />
+                    <button onclick="sendMessage()">
+                        <i class="fa fa-paper-plane"></i> Send
+                    </button>
+                </div>
+                <!-- end chat-message -->
+            </div>
+            <!-- end chat -->
         </div>
-        <!-- end chat-message -->
-      </div>
-      <!-- end chat -->
-    </div>
-    <button id="initchatbtn" onclick="toggleChat()" class="init-chat">
-      <i class="fa fa-user"></i> Chat with Us
-    </button>
-    <!-- end container -->
-    <script src="/static/js/jquery.min.js"></script>
-    <script src="/static/js/index.js"></script>
-  </body>
+        <button id="initchatbtn" onclick="toggleChat()" class="init-chat">
+            <i class="fa fa-user"></i> Chat with Us
+        </button>
+        <!-- end container -->
+        <script src="/static/js/jquery.min.js"></script>
+        <script src="/static/js/index.js"></script>
+        <!-- WHJ Chat -->
+        <script src="https://service.force.com/embeddedservice/5.0/esw.min.js"></script>
+        <script>
+            var initESW = function (gslbBaseURL) {
+                embedded_svc.settings.displayHelpButton = true;
+                embedded_svc.settings.language = "";
+                embedded_svc.settings.enabledFeatures = ["LiveAgent"];
+                embedded_svc.settings.entryFeature = "LiveAgent";
+
+                embedded_svc.init(
+                    "https://lwc710-dev-ed.my.salesforce.com",
+                    "https://netflix-clone-developer-edition.ap16.force.com/liveAgent",
+                    gslbBaseURL,
+                    "00D2w000000kcVU",
+                    "LiveAgent",
+                    {
+                        baseLiveAgentContentURL:
+                            "https://c.la2-c2-ukb.salesforceliveagent.com/content",
+                        deploymentId: "5722w000000UL5h",
+                        buttonId: "5732w000000UO2n",
+                        baseLiveAgentURL:
+                            "https://d.la2-c2-ukb.salesforceliveagent.com/chat",
+                        eswLiveAgentDevName:
+                            "EmbeddedServiceLiveAgent_Parent04I2w000000TUhOEAW_175b055d8d2",
+                        isOfflineSupportEnabled: false,
+                    }
+                );
+            };
+
+            if (!window.embedded_svc) {
+                var s = document.createElement("script");
+                s.setAttribute(
+                    "src",
+                    "https://lwc710-dev-ed.my.salesforce.com/embeddedservice/5.0/esw.min.js"
+                );
+                s.onload = function () {
+                    initESW(null);
+                };
+                document.body.appendChild(s);
+            } else {
+                initESW("https://service.force.com");
+            }
+        </script>
+    </body>
 </html>

@@ -26,17 +26,18 @@ def initchat():
 
 @app.route('/stream')
 def stream():
-
     key = request.args['sessKey']
     r = redis.Redis('localhost')
     sessKey = r.get(key)
     affToken = request.args['affinityToken']
-    # id: <any_id>\nevent: <any_message>\ndata: <any_data>\n\n
 
     def eventStream():
-        while True:
-            yield f"data: {getMessages(1, affToken, sessKey)}###{key}\n\n"
-        time.sleep(0.5)
+        try:
+            while True:
+                yield f"data: {getMessages(1, affToken, sessKey)}###{key}\n\n"
+                time.sleep(0.5)
+        except:
+            print("Connection Closed")
     return Response(eventStream(), mimetype="text/event-stream")
 
 

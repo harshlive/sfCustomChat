@@ -2,6 +2,7 @@ var sessKey = "";
 var affinityToken = "";
 var keyMap;
 var evtSource;
+var initFlag = false;
 
 function sendMessage() {
   console.log($("#message-to-send").val());
@@ -36,9 +37,16 @@ function sendMessageOnEnter(e) {
 }
 
 function toggleChat() {
+  initFlag = !initFlag;
   document.getElementById("chat-container").classList.toggle("chat-container");
   document.getElementById("initchatbtn").classList.toggle("chat-container");
-  initchat();
+  if(initFlag){
+    $(".chat-history ul").empty();
+    initchat();
+  }
+  else{
+    evtSource.close();
+  }
 }
 
 function getstream() {
