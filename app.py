@@ -94,8 +94,8 @@ def getChasitorInit(session_id, affinity_token, key):
     payload = {
         "sessionId": session_id,
         "organizationId": "00D1s0000008lc1",
-        "deploymentId": "5722v000000YLAV",
-        "buttonId": "5732v000000YLfE",
+        "deploymentId": "5721s0000008ORl",
+        "buttonId": "5731s0000004CMi",
         "userAgent": "",
         "language": "en-US",
         "screenResolution": "1900x1080",
