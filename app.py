@@ -5,7 +5,10 @@ import time
 import json
 from uuid import uuid4
 import redis
+from flask_cors import CORS
+
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route("/")
@@ -54,7 +57,7 @@ def sendMessage():
 
 
 def getSessionId():
-    url = "https://d.la2-c2-ukb.salesforceliveagent.com/chat/rest/System/SessionId"
+    url = "https://d.la2-c1cs-hnd.salesforceliveagent.com/chat/rest/System/SessionId"
 
     payload = {}
     headers = {
@@ -71,7 +74,7 @@ def getSessionId():
 
 
 def getChasitorInit(session_id, affinity_token, key):
-    url = "https://d.la2-c2-ukb.salesforceliveagent.com/chat/rest/Chasitor/ChasitorInit"
+    url = "https://d.la2-c1cs-hnd.salesforceliveagent.com/chat/rest/Chasitor/ChasitorInit"
 
     payload = "{\n  \"sessionId\": \""+session_id+"\",\n  \"organizationId\": \"00D2w000000kcVU\",\n  \"deploymentId\": \"5722w000000UL5h\",\n  \"buttonId\": \"5732w000000UO2n\",\n  \"userAgent\": \"\",\n  \"language\": \"en-US\",\n  \"screenResolution\": \"1900x1080\",\n  \"visitorName\": \"Test Visitor\",\n  \"prechatDetails\": [],\n  \"prechatEntities\": [],\n  \"receiveQueueUpdates\": true,\n  \"isPost\": true\n}"
 
@@ -85,7 +88,7 @@ def getChasitorInit(session_id, affinity_token, key):
 
 
 def getMessages(session_id, affinity_token, key):
-    url = "https://d.la2-c2-ukb.salesforceliveagent.com/chat/rest/System/Messages"
+    url = "https://d.la2-c1cs-hnd.salesforceliveagent.com/chat/rest/System/Messages"
     payload = {}
     headers = {
         'X-LIVEAGENT-AFFINITY': affinity_token,
@@ -117,7 +120,7 @@ def getMessages(session_id, affinity_token, key):
 
 
 def sendChatMessage(session_id, affinity_token, key, message):
-    url = "https://d.la2-c2-ukb.salesforceliveagent.com/chat/rest/Chasitor/ChatMessage"
+    url = "https://d.la2-c1cs-hnd.salesforceliveagent.com/chat/rest/Chasitor/ChatMessage"
     payload = '{"text": "' + message + '"}'
 
     headers = {
@@ -135,3 +138,4 @@ if __name__ == "__main__":
     app.run()
 
 # Endpoint https://d.la2-c2-ukb.salesforceliveagent.com/chat/rest/
+# New EP   https://d.la2-c1cs-hnd.salesforceliveagent.com/chat/rest/
