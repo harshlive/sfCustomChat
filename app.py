@@ -76,7 +76,35 @@ def getSessionId():
 def getChasitorInit(session_id, affinity_token, key):
     url = "https://d.la2-c1cs-hnd.salesforceliveagent.com/chat/rest/Chasitor/ChasitorInit"
 
-    payload = "{\n  \"sessionId\": \""+session_id+"\",\n  \"organizationId\": \"00D2w000000kcVU\",\n  \"deploymentId\": \"5722w000000UL5h\",\n  \"buttonId\": \"5732w000000UO2n\",\n  \"userAgent\": \"\",\n  \"language\": \"en-US\",\n  \"screenResolution\": \"1900x1080\",\n  \"visitorName\": \"Test Visitor\",\n  \"prechatDetails\": [],\n  \"prechatEntities\": [],\n  \"receiveQueueUpdates\": true,\n  \"isPost\": true\n}"
+    # payload = {
+    #     "sessionId": session_id,
+    #     "organizationId": "00D2w000000kcVU",
+    #     "deploymentId": "5722w000000UL5h",
+    #     "buttonId": "5732w000000UO2n",
+    #     "userAgent": "",
+    #     "language": "en-US",
+    #     "screenResolution": "1900x1080",
+    #     "visitorName": "Test Visitor",
+    #     "prechatDetails": [],
+    #     "prechatEntities": [],
+    #     "receiveQueueUpdates": True,
+    #     "isPost": True
+    # }
+
+    payload = {
+        "sessionId": session_id,
+        "organizationId": "00D1s0000008lc1",
+        "deploymentId": "5722v000000YLAV",
+        "buttonId": "5732v000000YLfJ",
+        "userAgent": "",
+        "language": "en-US",
+        "screenResolution": "1900x1080",
+        "visitorName": "Test Visitor",
+        "prechatDetails": [],
+        "prechatEntities": [],
+        "receiveQueueUpdates": True,
+        "isPost": True
+    }
 
     headers = {
         'X-LIVEAGENT-AFFINITY': affinity_token,
@@ -84,7 +112,7 @@ def getChasitorInit(session_id, affinity_token, key):
         'X-LIVEAGENT-SESSION-KEY': key,
     }
 
-    requests.request("POST", url, headers=headers, data=payload)
+    requests.request("POST", url, headers=headers, data=json.dumps(payload))
 
 
 def getMessages(session_id, affinity_token, key):
