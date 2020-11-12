@@ -3,7 +3,7 @@ var affinityToken = "";
 var keyMap;
 var evtSource;
 var initFlag = false;
-
+var base_url = "https://fca67037f00c.ngrok.io";
 function sendMessage() {
   console.log($("#message-to-send").val());
   var msgtosend = $("#message-to-send").val();
@@ -17,7 +17,9 @@ function sendMessage() {
   var objDiv = document.getElementById("chat-hist-container");
   objDiv.scrollTop = objDiv.scrollHeight;
   $.ajax({
-    url: `/sendmessage?sessKey=${sessKey}&affinityToken=${affinityToken}`,
+    url:
+      base_url +
+      `/sendmessage?sessKey=${sessKey}&affinityToken=${affinityToken}`,
     type: "POST",
     dataType: "json",
     data: {
@@ -40,18 +42,17 @@ function toggleChat() {
   initFlag = !initFlag;
   document.getElementById("chat-container").classList.toggle("chat-container");
   document.getElementById("initchatbtn").classList.toggle("chat-container");
-  if(initFlag){
+  if (initFlag) {
     $(".chat-history ul").empty();
     initchat();
-  }
-  else{
+  } else {
     evtSource.close();
   }
 }
 
 function getstream() {
   evtSource = new EventSource(
-    `/stream?sessKey=${sessKey}&affinityToken=${affinityToken}`
+    base_url + `/stream?sessKey=${sessKey}&affinityToken=${affinityToken}`
   );
   evtSource.onmessage = function (e) {
     // console.log(e.data.split("###")[1] == sessKey)
@@ -76,7 +77,7 @@ function getstream() {
 
 function initchat() {
   $.ajax({
-    url: "/initchat",
+    url: base_url + "/initchat",
     type: "GET",
     dataType: "json",
     success: function (data) {

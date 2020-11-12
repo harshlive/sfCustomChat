@@ -41,7 +41,10 @@ def stream():
                 time.sleep(0.5)
         except:
             print("Connection Closed")
-    return Response(eventStream(), mimetype="text/event-stream")
+    resp = Response(eventStream(), mimetype="text/event-stream")
+    resp.headers.add('Access-Control-Allow-Origin', '*')
+    # return Response(eventStream(), mimetype="text/event-stream")
+    return resp
 
 
 @app.route("/sendmessage", methods=['POST'])
