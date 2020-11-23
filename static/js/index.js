@@ -141,7 +141,6 @@ function startChat(){
     let btnid = dept_to_btnid_map[dept]; 
 
     $(".chat-history ul").empty();
-    debugger;
     initchat(btnid,depid,orgid);
 
     // Hide Chatoptions, start btn, issue subtype dropdown
@@ -167,10 +166,10 @@ function closeChat(){
   $("#chat-container").toggleClass("is-hidden");
   // Show Chat Btn
   $("#initchatbtn").toggleClass("is-hidden");
+  initFlag = !initFlag;
 }
 
 function initchat(btnid,depid,orgid) {
-  debugger;
   $.ajax({
     url: base_url + `/initchat?btnid=${btnid}&depid=${depid}&orgid=${orgid}`,
     type: "GET",
