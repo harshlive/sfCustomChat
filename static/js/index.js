@@ -3,8 +3,8 @@ var affinityToken = "";
 var keyMap;
 var evtSource;
 var initFlag = false;
-// var base_url = "https://livechat.ngrok.io";
-var base_url = "";
+var base_url = "https://livechat.ngrok.io";
+// var base_url = "";
 
 var sub_types = {
   "pci": ['Book or reschedule','Change class number','Late for class','Other issue','Student has not joined','Technical issue'],
