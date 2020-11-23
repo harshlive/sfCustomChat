@@ -18,9 +18,12 @@ def home():
 
 @app.route('/initchat')
 def initchat():
+    btnid = request.args.get('btnid')
+    orgid = request.args.get('orgid')
+    depid = request.args.get('depid')
     sessMapper = str(uuid4())
     session_id, affinity_token, key = getSessionId()
-    getChasitorInit(session_id, affinity_token, key)
+    getChasitorInit(session_id, affinity_token, key, orgid, depid, btnid)
     r = redis.Redis('localhost')
     r.set(sessMapper, key)
     r.expire(sessMapper, 3800)
@@ -76,7 +79,7 @@ def getSessionId():
     return session_id, affinity_token, key
 
 
-def getChasitorInit(session_id, affinity_token, key):
+def getChasitorInit(session_id, affinity_token, key, orgid, depid, btnid):
     url = "https://d.la2-c1cs-hnd.salesforceliveagent.com/chat/rest/Chasitor/ChasitorInit"
 
     # payload = {
@@ -96,9 +99,9 @@ def getChasitorInit(session_id, affinity_token, key):
 
     payload = {
         "sessionId": session_id,
-        "organizationId": "00D1s0000008lc1",
-        "deploymentId": "5721s0000008ORl",
-        "buttonId": "5731s0000004CMi",
+        "organizationId": orgid,
+        "deploymentId": depid,
+        "buttonId": btnid,
         "userAgent": "",
         "language": "en-US",
         "screenResolution": "1900x1080",

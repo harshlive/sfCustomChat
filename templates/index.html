@@ -1,111 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Live Chat</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
-      integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="/static/css/style.css" />
-    <link
-      rel="shortcut icon"
-      href="/static/img/favicon.ico"
-      type="image/x-icon"
-    />
-  </head>
-  <body>
-    <div id="chat-container" class="container clearfix chat-container">
-      <div class="chat">
-        <div class="chat-header clearfix">
-          <img
-            src="/static/img/avatar.png"
-            alt="avatar"
-            style="border-radius: 30px; height: 45px"
-          />
-
-          <div class="chat-about" style="padding-top: 5px; color: white">
-            <div class="chat-with">Chat with Harsh</div>
-          </div>
-          <div class="chat-close" onclick="toggleChat()">
-            <i class="fas fa-lg fa-times"></i>
-          </div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Live Chat</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+            integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
+            crossorigin="anonymous"
+        />
+        <link rel="stylesheet" href="/static/css/style.css" />
+        <link
+            rel="shortcut icon"
+            href="/static/img/favicon.ico"
+            type="image/x-icon"
+        />
+    </head>
+    <body>
+        <div class="param-dropdowns">
+            <label>DialCode</label>
+            <div class="dropdown">
+                <select id="dialcode" name="dialcode" class="dropdown-select">
+                    <option value="def">Default</option>
+                    <option value="91">91</option>
+                    <option value="1">1</option>
+                    <option value="44">44</option>
+                    <option value="61">61</option>
+                    <option value="63">63</option>
+                    <option value="64">64</option>
+                    <option value="65">65</option>
+                </select>
+            </div>
+            <label for="tag">Tag</label>
+            <div class="dropdown">
+                <select id="tag" name="tag" class="dropdown-select">
+                    <option value="apt">apt</option>
+                    <option value="paid">paid</option>
+                    <option value="trial">trial</option>
+                    <option value="paid_one_to_two">paid_one_to_two</option>
+                </select>
+            </div>
         </div>
-        <!-- end chat-header -->
+        <!-- End Param Dropdown -->
+        <div id="chat-container" class="container clearfix is-hidden">
+            <div class="chat">
+                <div class="chat-header clearfix">
+                    <img
+                        src="/static/img/avatar.png"
+                        alt="avatar"
+                        style="border-radius: 30px; height: 45px"
+                    />
 
-        <div id="chat-hist-container" class="chat-history">
-          <ul></ul>
+                    <div
+                        class="chat-about"
+                        style="padding-top: 5px; color: white"
+                    >
+                        <div class="chat-with"></div>
+                    </div>
+                    <div class="chat-close" onclick="closeChat();">
+                        <i class="fas fa-lg fa-times"></i>
+                    </div>
+                </div>
+                <!-- end chat-header -->
+
+                <div id="chatopt-container">
+                    <div class="dropdown">
+                        <select
+                            id="issue-type"
+                            name="issue-type"
+                            class="dropdown-select"
+                            onchange="showSubtype()"
+                        >
+                            <option value="">Select Class Type</option>
+                            <option value="pci">Paid Class Issue</option>
+                            <option value="tci">Trial Class Issue</option>
+                        </select>
+                    </div>
+                    <div
+                        id="issue-subtype-container"
+                        class="dropdown is-hidden"
+                    >
+                        <select
+                            id="issue-subtype"
+                            name="issue-subtype"
+                            class="dropdown-select"
+                        >
+                            <option value="" selected>Select Sub-Type</option>
+                        </select>
+                    </div>
+                    <div id="start-chat-btn">
+                        <button class="btn" onclick="startChat()">
+                            <i class="fas fa-comment"></i>
+                            Start Chat
+                        </button>
+                    </div>
+                </div>
+                <!-- end chat opt container -->
+
+                <div id="chat-hist-container" class="chat-history is-hidden">
+                    <ul></ul>
+                </div>
+                <!-- end chat-history -->
+
+                <div id="chat-message" class="chat-message clearfix is-hidden">
+                    <input
+                        type="text"
+                        name="message-to-send"
+                        id="message-to-send"
+                        placeholder="Type your message"
+                        rows="3"
+                        onkeydown="sendMessageOnEnter(event)"
+                    />
+                    <button onclick="sendMessage()">
+                        <i class="fa fa-paper-plane"></i> Send
+                    </button>
+                </div>
+                <!-- end chat-message -->
+            </div>
+            <!-- end chat -->
         </div>
-        <!-- end chat-history -->
-
-        <div class="chat-message clearfix">
-          <input
-            type="text"
-            name="message-to-send"
-            id="message-to-send"
-            placeholder="Type your message"
-            rows="3"
-            onkeydown="sendMessageOnEnter(event)"
-          />
-          <button onclick="sendMessage()">
-            <i class="fa fa-paper-plane"></i> Send
-          </button>
-        </div>
-        <!-- end chat-message -->
-      </div>
-      <!-- end chat -->
-    </div>
-    <button id="initchatbtn" onclick="toggleChat()" class="init-chat">
-      <i class="fa fa-user"></i> Chat with Us
-    </button>
-    <!-- end container -->
-    <script src="/static/js/jquery.min.js"></script>
-    <script src="/static/js/index.js"></script>
-    <!-- WHJ Chat -->
-    <!-- <script src="https://service.force.com/embeddedservice/5.0/esw.min.js"></script>
-        <script>
-            var initESW = function (gslbBaseURL) {
-                embedded_svc.settings.displayHelpButton = true;
-                embedded_svc.settings.language = "";
-                embedded_svc.settings.enabledFeatures = ["LiveAgent"];
-                embedded_svc.settings.entryFeature = "LiveAgent";
-
-                embedded_svc.init(
-                    "https://lwc710-dev-ed.my.salesforce.com",
-                    "https://netflix-clone-developer-edition.ap16.force.com/liveAgent",
-                    gslbBaseURL,
-                    "00D2w000000kcVU",
-                    "LiveAgent",
-                    {
-                        baseLiveAgentContentURL:
-                            "https://c.la2-c2-ukb.salesforceliveagent.com/content",
-                        deploymentId: "5722w000000UL5h",
-                        buttonId: "5732w000000UO2n",
-                        baseLiveAgentURL:
-                            "https://d.la2-c2-ukb.salesforceliveagent.com/chat",
-                        eswLiveAgentDevName:
-                            "EmbeddedServiceLiveAgent_Parent04I2w000000TUhOEAW_175b055d8d2",
-                        isOfflineSupportEnabled: false,
-                    }
-                );
-            };
-
-            if (!window.embedded_svc) {
-                var s = document.createElement("script");
-                s.setAttribute(
-                    "src",
-                    "https://lwc710-dev-ed.my.salesforce.com/embeddedservice/5.0/esw.min.js"
-                );
-                s.onload = function () {
-                    initESW(null);
-                };
-                document.body.appendChild(s);
-            } else {
-                initESW("https://service.force.com");
-            }
-        </script> -->
-  </body>
+        <button
+            id="initchatbtn"
+            onclick="toggleItem('chat-container');toggleItem('initchatbtn');"
+            class="init-chat"
+        >
+            <i class="fa fa-user"></i> Chat with Us
+        </button>
+        <!-- end container -->
+        <script src="/static/js/jquery.min.js"></script>
+        <script src="/static/js/index.js"></script>
+    </body>
 </html>
