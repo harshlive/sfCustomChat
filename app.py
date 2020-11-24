@@ -15,10 +15,10 @@ CORS(app)
 def home():
     sid = request.args.get("sid")
     if(sid == '1'):
-        context = {"Name": "Sundar Pichai",
+        context = {"Name": "Student 1",
                    "Phone": "+91 7245681126", "DC": "91"}
     else:
-        context = {"Name": "Harold Finch", "Phone": "+1 1345681126", "DC": "1"}
+        context = {"Name": "Student 2", "Phone": "+1 1345681126", "DC": "1"}
 
     return render_template('index.html', context=context)
 
