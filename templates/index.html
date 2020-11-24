@@ -19,28 +19,9 @@
     </head>
     <body>
         <div class="param-dropdowns">
-            <label>DialCode</label>
-            <div class="dropdown">
-                <select id="dialcode" name="dialcode" class="dropdown-select">
-                    <option value="def">Default</option>
-                    <option value="91">91</option>
-                    <option value="1">1</option>
-                    <option value="44">44</option>
-                    <option value="61">61</option>
-                    <option value="63">63</option>
-                    <option value="64">64</option>
-                    <option value="65">65</option>
-                </select>
-            </div>
-            <label for="tag">Tag</label>
-            <div class="dropdown">
-                <select id="tag" name="tag" class="dropdown-select">
-                    <option value="apt">apt</option>
-                    <option value="paid">paid</option>
-                    <option value="trial">trial</option>
-                    <option value="paid_one_to_two">paid_one_to_two</option>
-                </select>
-            </div>
+            <div>{{context.Name}}</div>
+            <div>{{context.Phone}}</div>
+            <div id="dialcode" class="is-hidden">{{context.DC}}</div>
         </div>
         <!-- End Param Dropdown -->
         <div id="chat-container" class="container clearfix is-hidden">

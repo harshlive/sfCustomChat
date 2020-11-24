@@ -135,7 +135,7 @@ function startChat(){
     let itype = document.getElementById("issue-type").value;
     let isubtype = document.getElementById("issue-subtype").value;
     let dialcode = document.getElementById("dialcode").value;
-    let tag = document.getElementById("tag").value;
+    let tag = "trial";
 
     let dept = getDept(itype, isubtype, dialcode, tag);
     let btnid = dept_to_btnid_map[dept]; 

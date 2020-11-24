@@ -13,7 +13,14 @@ CORS(app)
 
 @app.route("/")
 def home():
-    return render_template('index.html')
+    sid = request.args.get("sid")
+    if(sid == '1'):
+        context = {"Name": "Sundar Pichai",
+                   "Phone": "+91 7245681126", "DC": "91"}
+    else:
+        context = {"Name": "Harold Finch", "Phone": "+1 1345681126", "DC": "1"}
+
+    return render_template('index.html', context=context)
 
 
 @app.route('/initchat')
@@ -142,7 +149,7 @@ def getMessages(session_id, affinity_token, key):
                 if 'text' in json_resp['messages'][i]['message'].keys():
                     message += json_resp['messages'][i]['message']['text']
         elif json_resp['messages'][0]['type'] == "ChatRequestSuccess":
-            message = "Connected to Harsh Ranjan"
+            message = "Connected to Agent"
         else:
             message = "Typing"
     else:
