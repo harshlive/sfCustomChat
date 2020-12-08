@@ -106,6 +106,8 @@ function sendMessage() {
           startChat();
         }
         $(".chat-history ul").append(receivedMsg);
+        var objDiv = document.getElementById("chat-hist-container");
+        objDiv.scrollTop = objDiv.scrollHeight;
       },
       error: function (request, error) {
         console.log("Request: " + JSON.stringify(request));
@@ -171,7 +173,6 @@ function startChat(){
     let dept = getDept(itype, isubtype, dialcode, tag);
     let btnid = dept_to_btnid_map[dept]; 
 
-    $(".chat-history ul").empty();
     if(document.getElementById("issue-subtype").selectedOptions[0].innerText == "Technical issue" && !isTransferred){
       isForAgent = !isForAgent
       var receivedMsg = `<li>
@@ -188,19 +189,27 @@ function startChat(){
       $(".chat-history ul").append(receivedMsg);
       var objDiv = document.getElementById("chat-hist-container");
       objDiv.scrollTop = objDiv.scrollHeight;
+
+      // Hide Chatoptions, start btn, issue subtype dropdown
+      $("#chatopt-container").toggleClass("is-hidden");
+      $("#start-chat-btn").toggleClass("is-hidden");
+      $("#issue-subtype-container").toggleClass("is-hidden");
+      // Show ChatHistory, ChatMessage
+      $("#chat-hist-container").toggleClass("is-hidden");
+      $("#chat-message").toggleClass("is-hidden");
     }
     else{
       initFlag = !initFlag;
       initchat(btnid,depid,orgid);
-    }
 
-    // Hide Chatoptions, start btn, issue subtype dropdown
-    $("#chatopt-container").toggleClass("is-hidden");
-    $("#start-chat-btn").toggleClass("is-hidden");
-    $("#issue-subtype-container").toggleClass("is-hidden");
-    // Show ChatHistory, ChatMessage
-    $("#chat-hist-container").toggleClass("is-hidden");
-    $("#chat-message").toggleClass("is-hidden");
+      // Hide Chatoptions, start btn, issue subtype dropdown
+      $("#chatopt-container").toggleClass("is-hidden");
+      $("#start-chat-btn").toggleClass("is-hidden");
+      $("#issue-subtype-container").toggleClass("is-hidden");
+      // Show ChatHistory, ChatMessage
+      $("#chat-hist-container").toggleClass("is-hidden");
+      $("#chat-message").toggleClass("is-hidden");
+    }
 }
 
 function closeChat(){
