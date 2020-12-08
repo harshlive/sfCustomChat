@@ -202,13 +202,15 @@ function startChat(){
       initFlag = !initFlag;
       initchat(btnid,depid,orgid);
 
-      // Hide Chatoptions, start btn, issue subtype dropdown
-      $("#chatopt-container").toggleClass("is-hidden");
-      $("#start-chat-btn").toggleClass("is-hidden");
-      $("#issue-subtype-container").toggleClass("is-hidden");
-      // Show ChatHistory, ChatMessage
-      $("#chat-hist-container").toggleClass("is-hidden");
-      $("#chat-message").toggleClass("is-hidden");
+      if(!isTransferred){
+        // Hide Chatoptions, start btn, issue subtype dropdown
+        $("#chatopt-container").toggleClass("is-hidden");
+        $("#start-chat-btn").toggleClass("is-hidden");
+        $("#issue-subtype-container").toggleClass("is-hidden");
+        // Show ChatHistory, ChatMessage
+        $("#chat-hist-container").toggleClass("is-hidden");
+        $("#chat-message").toggleClass("is-hidden");
+      }
     }
 }
 
