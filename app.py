@@ -75,12 +75,13 @@ def sendBotMessage():
     msg = request.form['message']
     token = getEinsteinToken()
     intent = getIntent(token, msg)
+    bot_resp = "Please try the following troubleshooting steps:<br>"
     if intent == "Unable to start class":
-        bot_resp = "Please refresh the page after clearing cache and try again"
+        bot_resp += "Please refresh the page after clearing cache and try again<br><br>If these do not work, type transfer to an agent"
     elif intent == "Cannot View Student":
-        bot_resp = "1. Check if the webcam driver is updated.<br>2. Use the Troubleshooting tool.<br>3. Give permission to access video in browser."
+        bot_resp += "1. Check if the webcam driver is updated.<br>2. Use the Troubleshooting tool.<br>3. Give permission to access video in browser.<br><br>If these do not work, type transfer to an agent"
     elif intent == "Cannot Hear Student":
-        bot_resp = "1. Check if the audio driver is updated.<br>2. Use the Troubleshooting tool.<br>3. Set default speakers and test the sound."
+        bot_resp += "1. Check if the audio driver is updated.<br>2. Use the Troubleshooting tool.<br>3. Set default speakers and test the sound.<br><br>If these do not work, type transfer to an agent"
     elif intent == "Transfer to agent":
         bot_resp = "Transfer"
     return json.dumps({'success': True, 'bot-response': bot_resp}), 200, {'ContentType': 'application/json'}

@@ -5,8 +5,8 @@ var evtSource;
 var initFlag = false;
 var isForAgent = true;
 var isTransferred = false;
-var base_url = "https://livechat.ngrok.io";
-// var base_url = "";
+// var base_url = "https://livechat.ngrok.io";
+var base_url = "";
 
 var sub_types = {
   "pci": ['Book or reschedule','Change class number','Late for class','Other issue','Student has not joined','Technical issue'],
@@ -92,6 +92,7 @@ function sendMessage() {
       success: function (data) {
         var receivedMsg = `<li>
             <div class="message my-message">
+              <i class="fas fa-robot"></i>
               ${data['bot-response']}
             </div>
           </li>`;
@@ -100,7 +101,8 @@ function sendMessage() {
           isTransferred = true;
           receivedMsg = `<li>
               <div class="message my-message">
-                Transferring to our agent
+                <i class="fas fa-robot"></i>
+                Transferring to an agent
               </div>
             </li>`;
           startChat();
@@ -177,18 +179,10 @@ function startChat(){
       isForAgent = !isForAgent
       var receivedMsg = `<li>
                           <div class="message my-message">
-                            Hi, I am Eva a chatbot to assist you
+                            Connecting ...
                           </div>
                         </li>`;
       $(".chat-history ul").append(receivedMsg);
-      receivedMsg = `<li>
-                      <div class="message my-message">
-                        Please enter you issue
-                      </div>
-                    </li>`;
-      $(".chat-history ul").append(receivedMsg);
-      var objDiv = document.getElementById("chat-hist-container");
-      objDiv.scrollTop = objDiv.scrollHeight;
 
       // Hide Chatoptions, start btn, issue subtype dropdown
       $("#chatopt-container").toggleClass("is-hidden");
@@ -197,6 +191,26 @@ function startChat(){
       // Show ChatHistory, ChatMessage
       $("#chat-hist-container").toggleClass("is-hidden");
       $("#chat-message").toggleClass("is-hidden");
+
+      setTimeout(function(){
+        var receivedMsg = `<li>
+        <div class="message my-message">
+          <i class="fas fa-robot"></i>
+          Hi, I am Eva a chatbot to assist you
+        </div>
+        </li>`;
+        $(".chat-history ul").append(receivedMsg);
+        receivedMsg = `<li>
+            <div class="message my-message">
+              <i class="fas fa-robot"></i>
+              Please enter you issue
+            </div>
+          </li>`;
+        $(".chat-history ul").append(receivedMsg);
+        var objDiv = document.getElementById("chat-hist-container");
+        objDiv.scrollTop = objDiv.scrollHeight;
+      }, 1000);
+
     }
     else{
       initFlag = !initFlag;
@@ -218,6 +232,7 @@ function closeChat(){
   if(initFlag){
     evtSource.close();
     isTransferred = false;
+    $(".chat-history ul").empty();
     // Reset Chat options container, startchatbtn
     $("#chatopt-container").toggleClass("is-hidden");
     $("#start-chat-btn").toggleClass("is-hidden");
