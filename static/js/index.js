@@ -4,6 +4,7 @@ var keyMap;
 var evtSource;
 var initFlag = false;
 var isForAgent = true;
+var isTransferred = false;
 var base_url = "https://livechat.ngrok.io";
 // var base_url = "";
 
@@ -96,11 +97,13 @@ function sendMessage() {
           </li>`;
         if(data['bot-response'] == "Transfer"){
           isForAgent = !isForAgent
+          isTransferred = true;
           receivedMsg = `<li>
               <div class="message my-message">
                 Transferring to our agent
               </div>
             </li>`;
+          startChat();
         }
         $(".chat-history ul").append(receivedMsg);
       },
@@ -169,7 +172,7 @@ function startChat(){
     let btnid = dept_to_btnid_map[dept]; 
 
     $(".chat-history ul").empty();
-    if(document.getElementById("issue-subtype").selectedOptions[0].innerText == "Technical issue"){
+    if(document.getElementById("issue-subtype").selectedOptions[0].innerText == "Technical issue" && !isTransferred){
       isForAgent = !isForAgent
       var receivedMsg = `<li>
                           <div class="message my-message">
@@ -203,6 +206,7 @@ function startChat(){
 function closeChat(){
   if(initFlag){
     evtSource.close();
+    isTransferred = false;
     // Reset Chat options container, startchatbtn
     $("#chatopt-container").toggleClass("is-hidden");
     $("#start-chat-btn").toggleClass("is-hidden");
