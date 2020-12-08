@@ -6,6 +6,8 @@ import json
 from uuid import uuid4
 import redis
 from flask_cors import CORS
+import python_jwt as jwt
+import jwcrypto.jwk as jwk
 
 app = Flask(__name__)
 CORS(app)
@@ -59,7 +61,6 @@ def stream():
 
 @app.route("/sendmessage", methods=['POST'])
 def sendMessage():
-
     key = request.args['sessKey']
     r = redis.Redis('localhost')
     sessKey = r.get(key)
@@ -67,6 +68,22 @@ def sendMessage():
     msg = request.form['message']
     sendChatMessage(1, affToken, sessKey, msg)
     return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+
+@app.route("/sendbotmessage", methods=['POST'])
+def sendBotMessage():
+    msg = request.form['message']
+    token = getEinsteinToken()
+    intent = getIntent(token, msg)
+    if intent == "Unable to start class":
+        bot_resp = "Please refresh the page after clearing cache and try again"
+    elif intent == "Cannot View Student":
+        bot_resp = "1. Check if the webcam driver is updated.<br>2. Use the Troubleshooting tool.<br>3. Give permission to access video in browser."
+    elif intent == "Cannot Hear Student":
+        bot_resp = "1. Check if the audio driver is updated.<br>2. Use the Troubleshooting tool.<br>3. Set default speakers and test the sound."
+    elif intent == "Transfer to agent":
+        bot_resp = "Transfer"
+    return json.dumps({'success': True, 'bot-response': bot_resp}), 200, {'ContentType': 'application/json'}
 
 
 def getSessionId():
@@ -173,6 +190,49 @@ def sendChatMessage(session_id, affinity_token, key, message):
 
     response = requests.request("POST", url, headers=headers, data=payload)
     return response.status_code
+
+
+def getEinsteinToken():
+    url = "https://api.einstein.ai/v2/oauth2/token"
+
+    with open('einstein_platform.pem', 'rb') as pemfile:
+        key = pemfile.read()
+
+    key = jwk.JWK.from_pem(data=key)
+
+    payload = {'sub': 'subhash.rajpurohit@aethereus.com',
+               'aud': "https://api.einstein.ai/v2/oauth2/token", 'exp': int(time.time()+600)}
+    jwttoken = jwt.generate_jwt(payload, key, 'RS256')
+
+    payload = 'grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer&assertion=' + \
+        str(jwttoken)
+
+    headers = {
+        'Content-type': 'application/x-www-form-urlencoded'
+    }
+
+    response = requests.request("POST", url, headers=headers, data=payload)
+
+    return response.json()['access_token']
+
+
+def getIntent(token, message):
+    url = "https://api.einstein.ai/v2/language/intent"
+
+    payload = {'modelId': 'G2CYANDOZNHHSNRWVHLA3EZAN4',
+               'document': message}
+
+    headers = {
+        'Authorization': f'Bearer {token}',
+        'Cache-Control': 'no-cache',
+        'Content-Type': 'application/json'
+    }
+
+    response = requests.post(url, headers=headers, json=payload)
+    maxProbabilityItem = max(
+        response.json()['probabilities'], key=lambda x: x['probability'])
+
+    return maxProbabilityItem['label']
 
 
 if __name__ == "__main__":

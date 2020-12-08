@@ -3,6 +3,7 @@ var affinityToken = "";
 var keyMap;
 var evtSource;
 var initFlag = false;
+var isForAgent = true;
 var base_url = "https://livechat.ngrok.io";
 // var base_url = "";
 
@@ -52,7 +53,6 @@ function getDept(itype, isubtype, dialcode, tag){
 }
 
 function sendMessage() {
-  console.log($("#message-to-send").val());
   var msgtosend = $("#message-to-send").val();
   $("#message-to-send").val("");
   var sentmsg = `<li class="clearfix">
@@ -63,20 +63,53 @@ function sendMessage() {
   $(".chat-history ul").append(sentmsg);
   var objDiv = document.getElementById("chat-hist-container");
   objDiv.scrollTop = objDiv.scrollHeight;
-  $.ajax({
-    url:
-      base_url +
-      `/sendmessage?sessKey=${sessKey}&affinityToken=${affinityToken}`,
-    type: "POST",
-    dataType: "json",
-    data: {
-      message: msgtosend,
-    },
-    success: function (data) {},
-    error: function (request, error) {
-      console.log("Request: " + JSON.stringify(request));
-    },
-  });
+  if(isForAgent){
+    $.ajax({
+      url:
+        base_url +
+        `/sendmessage?sessKey=${sessKey}&affinityToken=${affinityToken}`,
+      type: "POST",
+      dataType: "json",
+      data: {
+        message: msgtosend,
+      },
+      success: function (data) {},
+      error: function (request, error) {
+        console.log("Request: " + JSON.stringify(request));
+      },
+    });
+  }
+  else{
+    $.ajax({
+      url:
+        base_url + `/sendbotmessage`,
+      type: "POST",
+      dataType: "json",
+      data: {
+        message: msgtosend,
+      },
+      success: function (data) {
+        var receivedMsg = `<li>
+            <div class="message my-message">
+              ${data['bot-response']}
+            </div>
+          </li>`;
+        if(data['bot-response'] == "Transfer"){
+          isForAgent = !isForAgent
+          receivedMsg = `<li>
+              <div class="message my-message">
+                Transferring to our agent
+              </div>
+            </li>`;
+        }
+        $(".chat-history ul").append(receivedMsg);
+      },
+      error: function (request, error) {
+        console.log("Request: " + JSON.stringify(request));
+      },
+    });
+  }
+
 }
 
 function sendMessageOnEnter(e) {
@@ -90,10 +123,6 @@ function getstream() {
     base_url + `/stream?sessKey=${sessKey}&affinityToken=${affinityToken}`
   );
   evtSource.onmessage = function (e) {
-    // console.log(e.data.split("###")[1] == sessKey)
-    // console.log(e.data);
-    // console.log(sessKey);
-    // console.log("-----------------------------------------------");
     if (e.data.split("###")[1] == sessKey) {
       var receivedMsg = `<li>
                                     <div class="message my-message">
@@ -128,7 +157,6 @@ function showSubtype(){
 
 
 function startChat(){
-    initFlag = !initFlag;
     let depid = "5721s0000008ORl";
     let orgid = "00D1s0000008lc1";
 
@@ -141,7 +169,27 @@ function startChat(){
     let btnid = dept_to_btnid_map[dept]; 
 
     $(".chat-history ul").empty();
-    initchat(btnid,depid,orgid);
+    if(document.getElementById("issue-subtype").selectedOptions[0].innerText == "Technical issue"){
+      isForAgent = !isForAgent
+      var receivedMsg = `<li>
+                          <div class="message my-message">
+                            Hi, I am Eva a chatbot to assist you
+                          </div>
+                        </li>`;
+      $(".chat-history ul").append(receivedMsg);
+      receivedMsg = `<li>
+                      <div class="message my-message">
+                        Please enter you issue
+                      </div>
+                    </li>`;
+      $(".chat-history ul").append(receivedMsg);
+      var objDiv = document.getElementById("chat-hist-container");
+      objDiv.scrollTop = objDiv.scrollHeight;
+    }
+    else{
+      initFlag = !initFlag;
+      initchat(btnid,depid,orgid);
+    }
 
     // Hide Chatoptions, start btn, issue subtype dropdown
     $("#chatopt-container").toggleClass("is-hidden");
