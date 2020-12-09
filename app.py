@@ -77,11 +77,11 @@ def sendBotMessage():
     intent = getIntent(token, msg)
     bot_resp = "Please try the following troubleshooting steps:<br>"
     if intent == "Unable to start class":
-        bot_resp += "Please refresh the page after clearing cache and try again<br><br>If these do not work, type transfer to an agent"
+        bot_resp += "Please refresh the page after clearing cache and try again"
     elif intent == "Cannot View Student":
-        bot_resp = 'I found this article which might help you<br><a href="https://www.dropbox.com/s/iorwl7pl4oxmla4/wjh_video_ts.pdf?dl=0" target="_blank">Video Troubleshoot guide</a><br><br>If this does not work, type transfer to an agent'
+        bot_resp = 'I found this article which might help you<br><a href="https://www.dropbox.com/s/iorwl7pl4oxmla4/wjh_video_ts.pdf?dl=0" target="_blank">Video Troubleshoot guide</a>'
     elif intent == "Cannot Hear Student":
-        bot_resp += "1. Check if the audio driver is updated.<br>2. Use the Troubleshooting tool.<br>3. Set default speakers and test the sound.<br><br>If these do not work, type transfer to an agent"
+        bot_resp += "1. Check if the audio driver is updated.<br>2. Use the Troubleshooting tool.<br>3. Set default speakers and test the sound."
     elif intent == "Transfer to agent":
         bot_resp = "Transfer"
     return json.dumps({'success': True, 'bot-response': bot_resp}), 200, {'ContentType': 'application/json'}

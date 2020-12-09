@@ -90,6 +90,7 @@ function sendMessage() {
         message: msgtosend,
       },
       success: function (data) {
+        var objDiv = document.getElementById("chat-hist-container");
         var receivedMsg = `<li>
             <div class="message my-message">
               <i class="fas fa-robot"></i>
@@ -108,8 +109,26 @@ function sendMessage() {
           startChat();
         }
         $(".chat-history ul").append(receivedMsg);
-        var objDiv = document.getElementById("chat-hist-container");
         objDiv.scrollTop = objDiv.scrollHeight;
+
+        setTimeout(function(){
+          receivedMsg = `<li>
+            <div class="message my-message">
+              Issue not resolved?<br>
+              Would you like me to connect you to an agent?
+            </div>
+            <div id="transfer-btn">
+              <button class="btn" onclick="transferChat()">
+                Yes
+              </button>
+              <button class="btn" onclick="showCloseMsg()">
+                No
+              </button>
+            </div>
+          </li>`;
+          $(".chat-history ul").append(receivedMsg);
+          objDiv.scrollTop = objDiv.scrollHeight;
+        }, 1000);
       },
       error: function (request, error) {
         console.log("Request: " + JSON.stringify(request));
@@ -117,6 +136,33 @@ function sendMessage() {
     });
   }
 
+}
+
+function transferChat(){
+  $("#transfer-btn").toggleClass("is-hidden");
+  var msg = `<li>
+    <div class="message my-message">
+      Connecting...
+    </div>
+  </li>`;
+  $(".chat-history ul").append(msg);
+  isForAgent = !isForAgent
+  isTransferred = true;
+  var objDiv = document.getElementById("chat-hist-container");
+  objDiv.scrollTop = objDiv.scrollHeight;
+  startChat();
+}
+
+function showCloseMsg(){
+  $("#transfer-btn").toggleClass("is-hidden");
+  var msg = `<li>
+    <div class="message my-message">
+      Click on "X" to close chat.
+    </div>
+  </li>`;
+  $(".chat-history ul").append(msg);
+  var objDiv = document.getElementById("chat-hist-container");
+  objDiv.scrollTop = objDiv.scrollHeight;
 }
 
 function sendMessageOnEnter(e) {

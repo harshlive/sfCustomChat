@@ -243,6 +243,7 @@ ul {
     border-radius: 5px;
     background-color: green;
     color: #ffffff;
+    cursor: pointer;
 }
 
 /* Opt container */
@@ -388,6 +389,11 @@ ul {
     .dropdown-select {
         padding-left: 6px;
     }
+}
+
+#transfer-btn {
+    padding-left: 2rem;
+    padding-bottom: 2rem;
 }
 
 /* Utility Classes */
