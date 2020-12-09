@@ -79,7 +79,7 @@ def sendBotMessage():
     if intent == "Unable to start class":
         bot_resp += "Please refresh the page after clearing cache and try again<br><br>If these do not work, type transfer to an agent"
     elif intent == "Cannot View Student":
-        bot_resp += "1. Check if the webcam driver is updated.<br>2. Use the Troubleshooting tool.<br>3. Give permission to access video in browser.<br><br>If these do not work, type transfer to an agent"
+        bot_resp = 'I found this article which might help you<br><a href="https://www.dropbox.com/s/iorwl7pl4oxmla4/wjh_video_ts.pdf?dl=0" target="_blank">Video Troubleshoot guide</a><br><br>If this does not work, type transfer to an agent'
     elif intent == "Cannot Hear Student":
         bot_resp += "1. Check if the audio driver is updated.<br>2. Use the Troubleshooting tool.<br>3. Set default speakers and test the sound.<br><br>If these do not work, type transfer to an agent"
     elif intent == "Transfer to agent":
