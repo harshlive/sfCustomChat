@@ -5,7 +5,7 @@ var evtSource;
 var initFlag = false;
 var isForAgent = true;
 var isTransferred = false;
-// var base_url = "https://livechat.ngrok.io";
+var base_url = "https://d170dda1b0c0.ngrok.io";
 var base_url = "";
 
 var sub_types = {
@@ -14,10 +14,10 @@ var sub_types = {
 }
 
 var dept_to_btnid_map = {
-  "teacher_chat_ind": "5731s0000004CNH",
-  "teacher_chat_int": "5731s0000004CNM",
-  "1_isto_m": "5731s0000004CNR",
-  "teacher_concierge": "5731s0000004CNS"
+  "teacher_chat_ind": "5731s0000004CPS",
+  "teacher_chat_int": "5731s0000004CPN",
+  "1_isto_m": "5731s0000004CPX",
+  "teacher_concierge": "5731s0000004CPc"
 }
 
 function getDept(itype, isubtype, dialcode, tag){
@@ -210,8 +210,8 @@ function showSubtype(){
 
 
 function startChat(){
-    let depid = "5721s0000008ORl";
-    let orgid = "00D1s0000008lc1";
+    let depid = "5721s0000008OSU";
+    let orgid = "00D1s0000008nHc";
 
     let itype = document.getElementById("issue-type").value;
     let isubtype = document.getElementById("issue-subtype").value;
