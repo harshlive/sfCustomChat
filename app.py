@@ -88,7 +88,7 @@ def sendBotMessage():
 
 
 def getSessionId():
-    url = "https://d.la2-c1cs-hnd.salesforceliveagent.com/chat/rest/System/SessionId"
+    url = "https://d.la4-c1-ph2.salesforceliveagent.com/chat/rest/System/SessionId"
 
     payload = {}
     headers = {
@@ -105,7 +105,7 @@ def getSessionId():
 
 
 def getChasitorInit(session_id, affinity_token, key, orgid, depid, btnid):
-    url = "https://d.la2-c1cs-hnd.salesforceliveagent.com/chat/rest/Chasitor/ChasitorInit"
+    url = "https://d.la4-c1-ph2.salesforceliveagent.com/chat/rest/Chasitor/ChasitorInit"
 
     # payload = {
     #     "sessionId": session_id,
@@ -147,7 +147,7 @@ def getChasitorInit(session_id, affinity_token, key, orgid, depid, btnid):
 
 
 def getMessages(session_id, affinity_token, key):
-    url = "https://d.la2-c1cs-hnd.salesforceliveagent.com/chat/rest/System/Messages"
+    url = "https://d.la4-c1-ph2.salesforceliveagent.com/chat/rest/System/Messages"
     payload = {}
     headers = {
         'X-LIVEAGENT-AFFINITY': affinity_token,
@@ -179,7 +179,7 @@ def getMessages(session_id, affinity_token, key):
 
 
 def sendChatMessage(session_id, affinity_token, key, message):
-    url = "https://d.la2-c1cs-hnd.salesforceliveagent.com/chat/rest/Chasitor/ChatMessage"
+    url = "https://d.la4-c1-ph2.salesforceliveagent.com/chat/rest/Chasitor/ChatMessage"
     payload = '{"text": "' + message + '"}'
 
     headers = {
@@ -240,4 +240,4 @@ if __name__ == "__main__":
     app.run()
 
 # Endpoint https://d.la2-c2-ukb.salesforceliveagent.com/chat/rest/
-# New EP   https://d.la2-c1cs-hnd.salesforceliveagent.com/chat/rest/
+# New EP   https://d.la4-c1-ph2.salesforceliveagent.com/chat/rest/

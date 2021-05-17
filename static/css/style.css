@@ -7,7 +7,7 @@
 }
 
 body {
-    background-image: url("/static/img/whj.png");
+    background-image: url("/static/img/background.png");
     background-repeat: no-repeat;
     background-size: cover;
     font: 14px/20px "Lato", Arial, sans-serif;
@@ -35,10 +35,11 @@ ul {
     right: 0;
     height: fit-content;
     width: 350px;
-    background: #f2f5f8;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     color: #434651;
+    /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
 .chat .chat-header {
@@ -252,6 +253,7 @@ ul {
     padding: 2rem 1rem;
     flex-direction: column;
     min-height: 400px;
+    background: #f2f5f8;
 }
 
 #chatopt-container label {

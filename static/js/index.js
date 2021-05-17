@@ -5,48 +5,47 @@ var evtSource;
 var initFlag = false;
 var isForAgent = true;
 var isTransferred = false;
-var base_url = "https://d170dda1b0c0.ngrok.io";
 var base_url = "";
 
 var sub_types = {
-  "pci": ['Book or reschedule','Change class number','Late for class','Other issue','Student has not joined','Technical issue'],
-  "tci": ['Cancel slot','Class to be rescheduled','Grade mismatch','Language mismatch','Late for class','Student has not joined','Technical issue']
+  "pci": ['Book or reschedule', 'Change class number', 'Late for class', 'Other issue', 'Student has not joined', 'Technical issue'],
+  "tci": ['Cancel slot', 'Class to be rescheduled', 'Grade mismatch', 'Language mismatch', 'Late for class', 'Student has not joined', 'Technical issue']
 }
 
 var dept_to_btnid_map = {
-  "teacher_chat_ind": "5731s0000004CPS",
-  "teacher_chat_int": "5731s0000004CPN",
-  "1_isto_m": "5731s0000004CPX",
-  "teacher_concierge": "5731s0000004CPc"
+  "teacher_chat_ind": "5734T000000H7W9",
+  "teacher_chat_int": "5734T000000H7hR",
+  "1_isto_m": "5734T000000H7hR",
+  "teacher_concierge": "5734T000000H7hR"
 }
 
-function getDept(itype, isubtype, dialcode, tag){
-  if(itype == "pci"){
-    if(tag == "paid_one_to_two"){
+function getDept(itype, isubtype, dialcode, tag) {
+  if (itype == "pci") {
+    if (tag == "paid_one_to_two") {
       return "teacher_chat_int"
-    }else{
-      if(dialcode == "91"){
+    } else {
+      if (dialcode == "91") {
         return "teacher_chat_ind"
-      }else{
+      } else {
         return "teacher_chat_int"
       }
     }
-  }else{
-    if(isubtype == 1 || isubtype == 2 || isubtype == 5 || isubtype == 6){
-      if(dialcode == "def"){
+  } else {
+    if (isubtype == 1 || isubtype == 2 || isubtype == 5 || isubtype == 6) {
+      if (dialcode == "def") {
         return "teacher_chat_int"
-      }else{
+      } else {
         return "1_isto_m"
       }
     }
-    if(isubtype == 0  || isubtype == 3){
+    if (isubtype == 0 || isubtype == 3) {
       return "teacher_concierge"
     }
-    if(isubtype == 4){
-      if(tag == "paid_one_to_two"){
+    if (isubtype == 4) {
+      if (tag == "paid_one_to_two") {
         return "teacher_chat_int"
       }
-      else{
+      else {
         return "teacher_concierge"
       }
     }
@@ -64,7 +63,7 @@ function sendMessage() {
   $(".chat-history ul").append(sentmsg);
   var objDiv = document.getElementById("chat-hist-container");
   objDiv.scrollTop = objDiv.scrollHeight;
-  if(isForAgent){
+  if (isForAgent) {
     $.ajax({
       url:
         base_url +
@@ -74,13 +73,13 @@ function sendMessage() {
       data: {
         message: msgtosend,
       },
-      success: function (data) {},
+      success: function (data) { },
       error: function (request, error) {
         console.log("Request: " + JSON.stringify(request));
       },
     });
   }
-  else{
+  else {
     $.ajax({
       url:
         base_url + `/sendbotmessage`,
@@ -97,8 +96,8 @@ function sendMessage() {
               ${data['bot-response']}
             </div>
           </li>`;
-        if(data['bot-response'] == "Transfer"){
-          isForAgent = !isForAgent
+        if (data['bot-response'] == "Transfer") {
+          isForAgent = true;
           isTransferred = true;
           receivedMsg = `<li>
               <div class="message my-message">
@@ -111,7 +110,7 @@ function sendMessage() {
         $(".chat-history ul").append(receivedMsg);
         objDiv.scrollTop = objDiv.scrollHeight;
 
-        setTimeout(function(){
+        setTimeout(function () {
           receivedMsg = `<li>
             <div class="message my-message">
               Issue not resolved?<br>
@@ -138,23 +137,23 @@ function sendMessage() {
 
 }
 
-function transferChat(){
-  $("#transfer-btn").toggleClass("is-hidden");
+function transferChat() {
+  $("#transfer-btn").addClass("is-hidden");
   var msg = `<li>
     <div class="message my-message">
       Connecting...
     </div>
   </li>`;
   $(".chat-history ul").append(msg);
-  isForAgent = !isForAgent
+  isForAgent = true;
   isTransferred = true;
   var objDiv = document.getElementById("chat-hist-container");
   objDiv.scrollTop = objDiv.scrollHeight;
   startChat();
 }
 
-function showCloseMsg(){
-  $("#transfer-btn").toggleClass("is-hidden");
+function showCloseMsg() {
+  $("#transfer-btn").addClass("is-hidden");
   var msg = `<li>
     <div class="message my-message">
       Click on "X" to close chat.
@@ -194,106 +193,112 @@ function getstream() {
 
 
 // Chat Opt Functions
-function showSubtype(){
+function showSubtype() {
   let itype = document.getElementById("issue-type").value;
-  if(itype){
+  if (itype) {
     $("#issue-subtype").empty();
-    for(i=0; i<sub_types[itype].length;i++){
+    for (i = 0; i < sub_types[itype].length; i++) {
       let opt = `<option value="${i}">${sub_types[itype][i]}</option>`;
       $("#issue-subtype").append(opt);
     }
-    if($("#issue-subtype-container").hasClass("is-hidden")){
-      $("#issue-subtype-container").toggleClass("is-hidden");
-    }
+    $("#issue-subtype-container").removeClass("is-hidden");
   }
 }
 
 
-function startChat(){
-    let depid = "5721s0000008OSU";
-    let orgid = "00D1s0000008nHc";
+function startChat() {
+  let depid = "5724T000000H6bt";
+  let orgid = "00D4T000000GCgk";
 
-    let itype = document.getElementById("issue-type").value;
-    let isubtype = document.getElementById("issue-subtype").value;
-    let dialcode = document.getElementById("dialcode").innerText;
-    let tag = "trial";
+  let itype = document.getElementById("issue-type").value;
+  let isubtype = document.getElementById("issue-subtype").value;
+  let dialcode = document.getElementById("dialcode").innerText;
+  let tag = "trial";
 
-    let dept = getDept(itype, isubtype, dialcode, tag);
-    let btnid = dept_to_btnid_map[dept]; 
+  let dept = getDept(itype, isubtype, dialcode, tag);
+  let btnid = dept_to_btnid_map[dept];
 
-    if(document.getElementById("issue-subtype").selectedOptions[0].innerText == "Technical issue" && !isTransferred){
-      isForAgent = !isForAgent
-      var receivedMsg = `<li>
+  if (document.getElementById("issue-subtype").selectedOptions[0].innerText == "Technical issue" && !isTransferred) {
+    isForAgent = false;
+    var receivedMsg = `<li>
                           <div class="message my-message">
                             Connecting ...
                           </div>
                         </li>`;
-      $(".chat-history ul").append(receivedMsg);
+    $(".chat-history ul").append(receivedMsg);
 
-      // Hide Chatoptions, start btn, issue subtype dropdown
-      $("#chatopt-container").toggleClass("is-hidden");
-      $("#start-chat-btn").toggleClass("is-hidden");
-      $("#issue-subtype-container").toggleClass("is-hidden");
-      // Show ChatHistory, ChatMessage
-      $("#chat-hist-container").toggleClass("is-hidden");
-      $("#chat-message").toggleClass("is-hidden");
+    // Hide Chatoptions, start btn, issue subtype dropdown
+    $("#chatopt-container").addClass("is-hidden");
+    $("#start-chat-btn").addClass("is-hidden");
+    $("#issue-subtype-container").addClass("is-hidden");
+    // Show ChatHistory, ChatMessage
+    $("#chat-hist-container").removeClass("is-hidden");
+    $("#chat-message").removeClass("is-hidden");
 
-      setTimeout(function(){
-        var receivedMsg = `<li>
+    setTimeout(function () {
+      var receivedMsg = `<li>
         <div class="message my-message">
           <i class="fas fa-robot"></i>
           Hi, I am Eva a chatbot to assist you
         </div>
         </li>`;
-        $(".chat-history ul").append(receivedMsg);
-        receivedMsg = `<li>
+      $(".chat-history ul").append(receivedMsg);
+      receivedMsg = `<li>
             <div class="message my-message">
               <i class="fas fa-robot"></i>
               Please enter you issue
             </div>
           </li>`;
-        $(".chat-history ul").append(receivedMsg);
-        var objDiv = document.getElementById("chat-hist-container");
-        objDiv.scrollTop = objDiv.scrollHeight;
-      }, 1000);
+      $(".chat-history ul").append(receivedMsg);
+      var objDiv = document.getElementById("chat-hist-container");
+      objDiv.scrollTop = objDiv.scrollHeight;
+    }, 1000);
 
-    }
-    else{
-      initFlag = !initFlag;
-      initchat(btnid,depid,orgid);
+  }
+  else {
+    var receivedMsg = `<li>
+                          <div class="message my-message">
+                            Connecting ...
+                          </div>
+                        </li>`;
+    $(".chat-history ul").append(receivedMsg);
 
-      if(!isTransferred){
-        // Hide Chatoptions, start btn, issue subtype dropdown
-        $("#chatopt-container").toggleClass("is-hidden");
-        $("#start-chat-btn").toggleClass("is-hidden");
-        $("#issue-subtype-container").toggleClass("is-hidden");
-        // Show ChatHistory, ChatMessage
-        $("#chat-hist-container").toggleClass("is-hidden");
-        $("#chat-message").toggleClass("is-hidden");
-      }
+    initFlag = true;
+    initchat(btnid, depid, orgid);
+
+    if (!isTransferred) {
+      // Hide Chatoptions, start btn, issue subtype dropdown
+      $("#chatopt-container").addClass("is-hidden");
+      $("#start-chat-btn").addClass("is-hidden");
+      $("#issue-subtype-container").addClass("is-hidden");
+      // Show ChatHistory, ChatMessage
+      $("#chat-hist-container").removeClass("is-hidden");
+      $("#chat-message").removeClass("is-hidden");
     }
+  }
 }
 
-function closeChat(){
-  if(initFlag){
+function closeChat() {
+  if (initFlag) {
     evtSource.close();
     isTransferred = false;
-    $(".chat-history ul").empty();
     // Reset Chat options container, startchatbtn
-    $("#chatopt-container").toggleClass("is-hidden");
-    $("#start-chat-btn").toggleClass("is-hidden");
+    $("#chatopt-container").removeClass("is-hidden");
+    $("#start-chat-btn").removeClass("is-hidden");
     // Hide ChatHistory, ChatMessage
-    $("#chat-hist-container").toggleClass("is-hidden");
-    $("#chat-message").toggleClass("is-hidden");
+    $("#chat-hist-container").addClass("is-hidden");
+    $("#chat-message").addClass("is-hidden");
   }
 
-  $("#chat-container").toggleClass("is-hidden");
+  $("#chat-container").addClass("is-hidden");
   // Show Chat Btn
-  $("#initchatbtn").toggleClass("is-hidden");
-  initFlag = !initFlag;
+  $("#initchatbtn").removeClass("is-hidden");
+
+  $(".chat-history ul").empty();
+  initFlag = false;
 }
 
-function initchat(btnid,depid,orgid) {
+function initchat(btnid, depid, orgid) {
   $.ajax({
     url: base_url + `/initchat?btnid=${btnid}&depid=${depid}&orgid=${orgid}`,
     type: "GET",
