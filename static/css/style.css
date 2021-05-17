@@ -45,7 +45,7 @@ ul {
 .chat .chat-header {
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
-    background-color: rgb(1, 136, 172);
+    background-color: rgb(46, 48, 148);
     padding: 10px;
     border-bottom: 2px solid white;
 }
@@ -130,12 +130,12 @@ ul {
 
 .chat .chat-history .other-message {
     background: rgb(216, 239, 245);
-    color: rgb(1, 136, 172);
+    color: rgb(46, 48, 148);
 }
 
 .chat .chat-history .other-message:after {
     border-bottom-color: rgb(216, 239, 245);
-    color: rgb(1, 136, 172);
+    color: rgb(46, 48, 148);
     left: 93%;
 }
 
@@ -163,7 +163,7 @@ ul {
     border-radius: 10px;
     cursor: pointer;
     font-weight: bold;
-    background: rgb(1, 136, 172);
+    background: rgb(46, 48, 148);
 }
 
 .chat-close {
@@ -187,14 +187,14 @@ ul {
     cursor: pointer;
     font-weight: bold;
     box-shadow: 0 10px 50px 0 rgba(0, 0, 0, 0.63);
-    background: rgb(1, 136, 172);
+    background: rgb(46, 48, 148);
 }
 
 .init-chat:hover {
-    background: rgb(1, 136, 172);
+    background: rgb(46, 48, 148);
 }
 .chat .chat-message button:hover {
-    background: rgb(1, 136, 172);
+    background: rgb(46, 48, 148);
 }
 
 .online,
@@ -284,13 +284,13 @@ ul {
     box-sizing: border-box;
     position: fixed;
     top: 10px;
-    right: 10px;
-    width: 200px;
+    right: 0px;
+    width: 150px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    color: rgb(1, 136, 172);
+    color: rgb(46, 48, 148);
     font-weight: bold;
     font-size: 18px;
 }
@@ -396,6 +396,10 @@ ul {
 #transfer-btn {
     padding-left: 2rem;
     padding-bottom: 2rem;
+}
+
+#message-to-send {
+    border: 1px solid lightgray;
 }
 
 /* Utility Classes */
